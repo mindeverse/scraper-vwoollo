@@ -313,12 +313,20 @@ def embed_products(
 
         image_url = product.get("image_url", "")
         existing_image_url = existing.get("image_url", "")
-        if image_url and (not existing or image_url != existing_image_url):
+        if image_url and (
+            not existing
+            or image_url != existing_image_url
+            or not existing.get("image_embedding")
+        ):
             all_needed.append((i, image_url, "front"))
 
         back_url = product.get("back_image_url")
         existing_back_url = existing.get("back_image_url")
-        if back_url and (not existing or back_url != existing_back_url):
+        if back_url and (
+            not existing
+            or back_url != existing_back_url
+            or not existing.get("back_image_embedding")
+        ):
             all_needed.append((i, back_url, "back"))
 
     logger.info("Need to embed %d images total", len(all_needed))
@@ -386,7 +394,11 @@ def embed_products(
                 if view_type == "front":
                     image_url = product.get("image_url", "")
                     existing_image_url = existing.get("image_url", "")
-                    if image_url and (not existing or image_url != existing_image_url):
+                    if image_url and (
+                        not existing
+                        or image_url != existing_image_url
+                        or not existing.get("image_embedding")
+                    ):
                         image = pending_download.get(image_url)
                         if image:
                             images_to_embed.append((idx, image_url, "front", image))
@@ -395,7 +407,11 @@ def embed_products(
                 elif view_type == "back":
                     back_url = product.get("back_image_url")
                     existing_back_url = existing.get("back_image_url")
-                    if back_url and (not existing or back_url != existing_back_url):
+                    if back_url and (
+                        not existing
+                        or back_url != existing_back_url
+                        or not existing.get("back_image_embedding")
+                    ):
                         image = pending_download.get(back_url)
                         if image:
                             images_to_embed.append((idx, back_url, "back", image))

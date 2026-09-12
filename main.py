@@ -44,6 +44,11 @@ def _needs_update(existing: dict[str, Any], scraped: dict[str, Any]) -> bool:
     for field in compare_fields:
         if str(existing.get(field) or "") != str(scraped.get(field) or ""):
             return True
+    # Re-process if required embeddings are missing from a prior failed run
+    if scraped.get("image_url") and not existing.get("image_embedding"):
+        return True
+    if not existing.get("info_embedding"):
+        return True
     return False
 
 
