@@ -11,6 +11,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Callable, Optional
 
+import requests
 import torch
 from PIL import Image
 
